@@ -6,7 +6,7 @@ namespace xenialdan\MagicWE2\commands;
 
 use BlockHorizons\libschematic\Schematic;
 use pocketmine\command\CommandSender;
-use pocketmine\event\TranslationContainer;
+use pocketmine\lang\TranslationContainer;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat;
