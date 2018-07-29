@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace xenialdan\MagicWE2;
 
+use BlockHorizons\libschematic\Schematic;
 use pocketmine\block\Block;
 use pocketmine\block\BlockIds;
 use pocketmine\block\UnknownBlock;
@@ -19,7 +20,6 @@ use pocketmine\nbt\tag\NamedTag;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
-use xenialdan\MagicWE2\shape\Custom;
 use xenialdan\MagicWE2\shape\ShapeGenerator;
 use xenialdan\MagicWE2\task\AsyncFillTask;
 
@@ -389,8 +389,8 @@ class API{
 				break;
 			}
 			case $lang->translateString('ui.brush.select.type.clipboard'): {
-				$clipboard = $session->getClipboards()[0]??null;
-				if(is_null($clipboard)){
+				$clipboard = $session->getClipboards()[0] ?? null;
+				if (is_null($clipboard)){
 					$session->getPlayer()->sendMessage(TextFormat::RED . "You have no clipboard - create one first");
 					return false;
 				}
@@ -398,7 +398,7 @@ class API{
 				break;
 			}
 			case null:
-			default:{
+			default: {
 				$session->getPlayer()->sendMessage("Unknown shape");
 				return false;
 			}
@@ -465,6 +465,16 @@ class API{
 	 */
 	public static function setSchematics(array $schematics){
 		self::$schematics = $schematics;
+	}
+
+	/**
+	 * @param Schematic $schematic
+	 * @param string $filename
+	 * @return Clipboard|null
+	 */
+	public static function &addSchematic(Schematic $schematic, string $filename): ?Clipboard{
+		self::$schematics[$filename] = new Clipboard($schematic->getBlocks());
+		return self::$schematics[$filename];
 	}
 
 	public static function undo(Session $session){

@@ -30,6 +30,7 @@ class Loader extends PluginBase{
 	/** @var Loader */
 	private static $instance = null;
 	private $baseLang;
+	public static $path = [];
 
 	/**
 	 * Returns an instance of the plugin
@@ -57,6 +58,8 @@ class Loader extends PluginBase{
 			}
 		}
 		$this->getLogger()->info("Sessions successfully restored");
+		self::$path['schematics'] = $this->getDataFolder() . 'schematics';
+		@mkdir(self::$path['schematics']);
 	}
 
 	public function onEnable(){
